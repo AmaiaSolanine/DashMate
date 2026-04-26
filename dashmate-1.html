@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>DashMate — Dasher Message Templates</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<style>
+:root {
+  --red: #E8341A;
+  --red-dark: #C42810;
+  --red-dim: rgba(232,52,26,0.12);
+  --red-glow: rgba(232,52,26,0.25);
+  --bg: #0C0B0A;
+  --surface: #161412;
+  --surface2: #1E1B18;
+  --surface3: #252118;
+  --border: rgba(255,255,255,0.07);
+  --border-accent: rgba(232,52,26,0.3);
+  --text: #F2EDE8;
+  --text-2: #9A9086;
+  --text-3: #5C5449;
+  --gold: #C8A96A;
+  --gold-dim: rgba(200,169,106,0.15);
+  --radius: 16px;
+  --radius-sm: 10px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Manrope', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── Noise texture overlay ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 999;
+  opacity: 0.6;
+}
+
+/* ── Hero ── */
+.hero {
+  position: relative;
+  padding: 52px 20px 72px;
+  overflow: hidden;
+  background: linear-gradient(160deg, #1A0E08 0%, #0C0B0A 60%);
+}
+
+.hero-orb {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+.hero-orb-1 {
+  width: 320px; height: 320px;
+  top: -120px; right: -80px;
+  background: radial-gradient(circle, rgba(232,52,26,0.18) 0%, transparent 70%);
+}
+.hero-orb-2 {
+  width: 180px; height: 180px;
+  bottom: -60px; left: 30px;
+  background: radial-gradient(circle, rgba(200,169,106,0.1) 0%, transparent 70%);
+}
+
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: var(--gold-dim);
+  border: 1px solid rgba(200,169,106,0.25);
+  border-radius: 50px;
+  padding: 5px 12px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 16px;
+}
+.hero-eyebrow i { font-size: 10px; }
+
+.hero-logo {
+  font-family: 'Syne', sans-serif;
+  font-size: 42px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -1px;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+.hero-logo span { color: var(--red); }
+
+.hero-sub {
+  font-size: 14px;
+  color: var(--text-2);
+  font-weight: 500;
+  line-height: 1.5;
+  max-width: 280px;
+}
+
+.customer-badge {
+  display: none;
+  align-items: center;
+  gap: 8px;
+  margin-top: 20px;
+  background: rgba(232,52,26,0.1);
+  border: 1px solid var(--border-accent);
+  border-radius: 50px;
+  padding: 7px 14px;
+  width: fit-content;
+  font-size: 13px;
+  font-weight: 600;
+  color: #FF7A63;
+}
+.customer-badge.show { display: inline-flex; }
+.customer-badge i { font-size: 11px; opacity: 0.7; }
+
+/* ── Main content ── */
+.main {
+  max-width: 600px;
+  margin: -44px auto 0;
+  padding: 0 14px 60px;
+  position: relative;
+  z-index: 2;
+}
+
+/* ── Tabs ── */
+.tabs {
+  display: flex;
+  gap: 6px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 5px;
+  margin-bottom: 14px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+}
+
+.tab {
+  flex: 1;
+  padding: 12px 8px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  font-family: 'Manrope', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-3);
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  letter-spacing: 0.2px;
+}
+.tab:hover { color: var(--text-2); }
+.tab.active {
+  background: var(--red);
+  color: #fff;
+  box-shadow: 0 2px 12px var(--red-glow);
+}
+.tab i { font-size: 12px; }
+
+/* ── Name card ── */
+.name-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px;
+  margin-bottom: 14px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+}
+
+.name-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: var(--red);
+  margin-bottom: 10px;
+}
+
+.name-row {
+  display: flex;
+  gap: 8px;
+}
+
+.name-wrap {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.name-wrap input {
+  width: 100%;
+  background: var(--surface2);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 13px 38px 13px 14px;
+  font-size: 15px;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 600;
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.name-wrap input::placeholder { color: var(--text-3); font-weight: 500; }
+.name-wrap input:focus {
+  border-color: var(--red);
+  box-shadow: 0 0 0 3px var(--red-dim);
+}
+
+.btn-clear {
+  position: absolute;
+  right: 10px;
+  background: var(--surface3);
+  border: none;
+  color: var(--text-3);
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  font-size: 10px;
+  cursor: pointer;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+}
+.btn-clear:hover { background: var(--red); color: #fff; }
+.btn-clear.show { display: flex; }
+
+.btn-generate {
+  background: var(--red);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 13px 20px;
+  font-family: 'Syne', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+  letter-spacing: 0.3px;
+  box-shadow: 0 4px 16px var(--red-glow);
+}
+.btn-generate:hover { background: var(--red-dark); transform: translateY(-1px); box-shadow: 0 6px 20px var(--red-glow); }
+.btn-generate:active { transform: scale(0.97); }
+
+/* ── Control row ── */
+.controls {
+  display: none;
+  margin-bottom: 14px;
+}
+.controls.show { display: flex; gap: 8px; }
+
+.btn-outline {
+  flex: 1;
+  background: var(--surface);
+  color: var(--text-2);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 11px 14px;
+  font-family: 'Manrope', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+}
+.btn-outline:hover { border-color: var(--red); color: var(--red); background: var(--red-dim); }
+.btn-outline:active { transform: scale(0.97); }
+
+/* ── Pages ── */
+.page { display: none; }
+.page.active { display: block; }
+
+/* ── Section divider ── */
+.section-divider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 20px 0 12px;
+  padding: 0 2px;
+}
+.section-divider span {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: var(--text-3);
+  white-space: nowrap;
+}
+.section-divider::before, .section-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+.section-divider i { font-size: 11px; color: var(--text-3); }
+
+/* ── Scenario cards ── */
+.scenario-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 10px;
+  overflow: hidden;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  animation: fadeUp 0.35s ease both;
+}
+.scenario-card:hover {
+  border-color: rgba(255,255,255,0.12);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+}
+.scenario-card.open {
+  border-color: var(--border-accent);
+  box-shadow: 0 4px 24px rgba(232,52,26,0.08);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  padding: 15px 16px;
+  cursor: pointer;
+  gap: 13px;
+  user-select: none;
+}
+
+.card-icon {
+  width: 42px; height: 42px;
+  border-radius: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 17px;
+  flex-shrink: 0;
+}
+
+/* Icon themes — unified red */
+.icon-arriving,
+.icon-leaving,
+.icon-dropoff,
+.icon-busy,
+.icon-unavail,
+.icon-missing,
+.icon-cancel,
+.icon-double { background: var(--red-dim); color: var(--red); }
+
+.card-info { flex: 1; min-width: 0; }
+.card-title { font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700; color: var(--text); line-height: 1.2; }
+.card-desc { font-size: 12px; color: var(--text-2); margin-top: 2px; }
+
+.chevron {
+  font-size: 13px;
+  color: var(--text-3);
+  transition: transform 0.3s ease;
+  flex-shrink: 0;
+}
+.scenario-card.open .chevron { transform: rotate(180deg); color: var(--red); }
+
+.card-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.38s cubic-bezier(0.4,0,0.2,1);
+}
+.scenario-card.open .card-body { max-height: 700px; }
+
+.card-inner { padding: 0 16px 16px; }
+
+/* Item input (for unavailable) */
+.item-hint {
+  font-size: 11px;
+  color: var(--text-2);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.item-hint i { color: var(--red); font-size: 10px; }
+
+.item-input-row input {
+  width: 100%;
+  background: var(--surface2);
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 15px;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 600;
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  margin-bottom: 10px;
+}
+.item-input-row input::placeholder { color: var(--text-3); font-weight: 400; }
+.item-input-row input:focus {
+  border-color: var(--red);
+  box-shadow: 0 0 0 3px var(--red-dim);
+}
+
+/* Template bubble */
+.bubble {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 15px;
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: var(--text);
+  border-left: 3px solid var(--red);
+}
+
+.bubble-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.btn-copy {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--red);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 9px 16px;
+  font-family: 'Manrope', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 2px 10px var(--red-glow);
+}
+.btn-copy:hover { background: var(--red-dark); }
+.btn-copy:active { transform: scale(0.96); }
+.btn-copy.copied { background: #1EA858; box-shadow: none; }
+
+.btn-shuffle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface3);
+  color: var(--text-3);
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  width: 38px; height: 38px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 13px;
+  flex-shrink: 0;
+}
+.btn-shuffle:hover { border-color: var(--red); color: var(--red); background: var(--red-dim); }
+.btn-shuffle:active { transform: rotate(90deg); }
+
+/* ── Empty state ── */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+}
+.empty-icon {
+  width: 72px; height: 72px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  margin: 0 auto 20px;
+  color: var(--red);
+  opacity: 0.5;
+}
+.empty-state h3 { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+.empty-state p { font-size: 14px; color: var(--text-2); line-height: 1.5; }
+
+/* ── Toast ── */
+.toast {
+  position: fixed;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%) translateY(70px);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 11px 20px;
+  border-radius: 50px;
+  font-size: 13px;
+  font-weight: 700;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+  z-index: 1000;
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+.toast i { color: #1EA858; }
+
+/* ── Animations ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes popBounce {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.03); }
+  100% { transform: scale(1); }
+}
+.pop { animation: popBounce 0.25s ease; }
+
+@media (max-width: 420px) {
+  .hero { padding: 44px 16px 66px; }
+  .hero-logo { font-size: 34px; }
+  .main { padding: 0 10px 50px; }
+  .name-row { flex-direction: column; }
+  .btn-generate { width: 100%; justify-content: center; padding: 14px; }
+  .tab { font-size: 12px; padding: 11px 5px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="hero-orb hero-orb-1"></div>
+  <div class="hero-orb hero-orb-2"></div>
+  <div class="hero-eyebrow"><i class="fa-solid fa-motorcycle"></i> For DoorDash Dashers</div>
+  <div class="hero-logo">Dash<span>Mate</span></div>
+  <div class="hero-sub">Professional message templates for every delivery situation.</div>
+  <div class="customer-badge" id="customerBadge">
+    <i class="fa-solid fa-user"></i>
+    <span id="badgeName"></span>
+  </div>
+</div>
+
+<!-- Main -->
+<div class="main">
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <button class="tab active" onclick="switchPage('personalized')">
+      <i class="fa-solid fa-user-pen"></i> Personalized
+    </button>
+    <button class="tab" onclick="switchPage('quick')">
+      <i class="fa-solid fa-bolt"></i> Quick Send
+    </button>
+  </div>
+
+  <!-- Personalized Page -->
+  <div id="page-personalized" class="page active">
+    <div class="name-card">
+      <div class="name-label">Customer Name</div>
+      <div class="name-row">
+        <div class="name-wrap">
+          <input type="text" id="nameInput" placeholder="e.g. Sarah" autocomplete="off">
+          <button class="btn-clear" id="clearBtn" onclick="resetAll()" title="Clear">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+        <button class="btn-generate" onclick="generateTemplates()">
+          <i class="fa-solid fa-wand-magic-sparkles"></i> Generate
+        </button>
+      </div>
+    </div>
+
+    <div class="controls" id="controls">
+      <button class="btn-outline" onclick="resetAll()">
+        <i class="fa-solid fa-arrow-rotate-left"></i> New Customer
+      </button>
+    </div>
+
+    <div id="personContainer"></div>
+
+    <div id="emptyState" class="empty-state">
+      <div class="empty-icon"><i class="fa-solid fa-paper-plane"></i></div>
+      <h3>Ready to Dash?</h3>
+      <p>Enter your customer's first name above<br>to generate personalized messages.</p>
+    </div>
+  </div>
+
+  <!-- Quick Page -->
+  <div id="page-quick" class="page">
+    <div id="quickContainer"></div>
+  </div>
+
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast">
+  <i class="fa-solid fa-check"></i>
+  <span id="toastMsg">Copied!</span>
+</div>
+
+<script>
+// ─────────────────────────────────────────────
+//  DATA
+// ─────────────────────────────────────────────
+
+const mainScenarios = [
+  {
+    id: 'arriving',
+    title: 'Arriving at Restaurant',
+    desc: "Let them know you're picking up",
+    icon: 'fa-store',
+    iconClass: 'icon-arriving',
+    templates: [
+      n => `Hi ${n}! I've just arrived at the restaurant and they're working on your order now 🍽️ I'll have it headed your way as soon as it's ready!`,
+      n => `Hey ${n}! I'm at the restaurant getting your order — they're putting it together right now. On my way to you shortly! 🔥`,
+      n => `Hi there, ${n}! Just pulled up to the restaurant. Your order is in the works — won't be long at all! 😊`,
+      n => `Hey ${n}, I've arrived to pick up your order! The restaurant is on it — I'll update you when I'm heading your way. 🙌`,
+      n => `Good news, ${n}! I'm here at the restaurant and your order is being prepared. Stay tuned — delivery incoming soon! 🍴`,
+      n => `Hi ${n}! Made it to the restaurant. Your order is being handled right now and I'll be rolling out to you shortly! 😄`,
+      n => `Hey ${n}! Just checked in at the restaurant — your order is actively being put together. I'll have it on its way to you ASAP! ✅`,
+      n => `Hi ${n}! I'm standing by at the restaurant waiting for your order. They're working on it now and I'll be out the door soon! 🏃`,
+    ]
+  },
+  {
+    id: 'leaving',
+    title: 'Leaving the Restaurant',
+    desc: "Order picked up — heading to you",
+    icon: 'fa-route',
+    iconClass: 'icon-leaving',
+    templates: [
+      n => `Great news, ${n}! Your order is officially in my hands and I'm heading your way right now 🚗💨 See you soon!`,
+      n => `${n}, your order is secured and I'm on the move! Should have it at your door before you know it 🔥`,
+      n => `Hey ${n}! Just grabbed your order and I'm en route to your door. Get ready — delivery is coming! 🎉`,
+      n => `Hi ${n}! Order picked up and I'm rolling out now. On my way to you — get those napkins ready! 🍽️`,
+      n => `${n}, we're officially in delivery mode! Order is in my bag and I'm headed straight to you 😄`,
+      n => `Hey ${n}! Mission accomplished at the restaurant — your order is with me and I'm on my way now! ⏰`,
+      n => `Hi there ${n}! Just left the restaurant with your food. Everything is packed up and I'm making my way to you! 🙌`,
+      n => `${n}, your order has been picked up and I'm heading out now! Tracking should be updated — see you soon! 🗺️`,
+    ]
+  },
+  {
+    id: 'dropoff',
+    title: 'Dropping Off Delivery',
+    desc: "Food is here!",
+    icon: 'fa-box-open',
+    iconClass: 'icon-dropoff',
+    templates: [
+      n => `Hi ${n}! Your order has been dropped off at your door — enjoy every bite, you deserve it! 🎉`,
+      n => `Delivery complete, ${n}! Your food is at the door and ready to go. Bon appétit! 😊`,
+      n => `Hey ${n}! Just left your order at the door. Grab it while it's hot! 🔥`,
+      n => `${n}, your delivery has officially landed! Dropped it safe and sound at your door — enjoy! 🍽️`,
+      n => `All done, ${n}! Your order is at your doorstep waiting for you. Thank you and enjoy your meal! 🙌`,
+      n => `Hi ${n}! Special delivery — your food is right outside your door. Hope everything is absolutely delicious! ✨`,
+      n => `Hey ${n}! Just set your order down at the door. Everything should be fresh and ready to go. Enjoy! 🫶`,
+      n => `${n}, delivery done! Your order is waiting at the door. Thanks for choosing DoorDash today — have a great meal! 🌟`,
+    ]
+  },
+];
+
+const specialScenarios = [
+  {
+    id: 'busy',
+    title: 'Busy / Backed Up Restaurant',
+    desc: "Set expectations on wait time",
+    icon: 'fa-clock',
+    iconClass: 'icon-busy',
+    templates: [
+      n => `Hi ${n}! Just a heads up — the restaurant is a little backed up right now, but your order is being prepared. I'm staying right here until it's ready! ⏳`,
+      n => `Hey ${n}! The restaurant is running a bit behind, but don't worry — I'm on top of it and will have your order the second it's up. Thanks for your patience! 😊`,
+      n => `Hi there ${n}! Your order is taking just a few extra minutes at the restaurant. Good food takes time — I'll be out the door to you as soon as it's ready! 🙏`,
+      n => `${n}, quick update! The restaurant is a little busy right now so your order may take a few more minutes. I'm standing by and not going anywhere! 💪`,
+      n => `Hey ${n}! Wanted to keep you in the loop — it's a busy time at the restaurant, but your order is still being prepared. Should have it on the way shortly! 🕐`,
+      n => `Hi ${n}! The kitchen is a bit slammed right now, but your order is in the queue. I'm here waiting and will grab it the moment it comes out! 🏃`,
+      n => `${n}, just a small delay update — the restaurant is handling a rush. Your food is being made and I'll be heading your way just as soon as it's done! 🍳`,
+      n => `Hey ${n}! Small heads up that the restaurant is running a bit slow today. No worries though — I'm right here and will have your order on the way as fast as possible! 😄`,
+    ]
+  },
+  {
+    id: 'unavailable',
+    title: 'Item Unavailable',
+    desc: "Handle out-of-stock items",
+    icon: 'fa-circle-xmark',
+    iconClass: 'icon-unavail',
+    hasItemInput: true,
+    itemInputId: 'unavailItem',
+    itemPlaceholder: 'e.g. large fries, Diet Coke',
+    itemHint: 'Type the unavailable item to personalize',
+    templates: [
+      (n, item) => `Hi ${n}! The restaurant let me know that ${item ? 'the ' + item : 'one of your items'} isn't available right now. Would you like to swap it for something else, or should I go ahead without it? DoorDash support can also help at +1-855-431-0459! 📝`,
+      (n, item) => `Hey ${n}! Quick heads up — ${item ? 'the ' + item + ' is' : 'an item on your order is'} out of stock at this location. Happy to grab a substitute if you'd like, or I can proceed with the rest of your order. Just let me know! 🔄`,
+      (n, item) => `Hi there ${n}! Unfortunately ${item ? 'the ' + item + ' isn\'t' : 'one of your items isn\'t'} available today. Would you prefer a replacement or would you like to skip it? Your call — I'm here either way! You can also contact support at +1-855-431-0459 👍`,
+      (n, item) => `${n}, just got word from the restaurant that ${item ? 'the ' + item + ' is' : 'one of your items is'} unavailable. I want to make sure you're taken care of — would you like to choose something else? DoorDash support is also at +1-855-431-0459 if needed! 😊`,
+      (n, item) => `Hey ${n}! Wanted to flag this quickly — ${item ? 'the ' + item : 'an item you ordered'} isn't available right now. I can grab a similar item if you'd like, or continue without it — totally your call! For extra help, reach DoorDash at +1-855-431-0459 ✨`,
+      (n, item) => `Hi ${n}! The restaurant just informed me that ${item ? 'the ' + item : 'one of your items'} is currently out. Would you like a substitution, or should I bring what's available? DoorDash support at +1-855-431-0459 can also assist! 🤝`,
+      (n, item) => `${n}, sorry for the hiccup — the restaurant says ${item ? 'the ' + item + ' isn\'t' : 'one of your items isn\'t'} available today. Let me know how you'd like to proceed and I'll handle it right away! Support: +1-855-431-0459 💪`,
+      (n, item) => `Hey there ${n}! Small issue — ${item ? 'the ' + item : 'an item from your order'} can't be made right now. I'm happy to swap it or skip it — whatever works best for you! You can also call DoorDash at +1-855-431-0459 🙌`,
+    ]
+  },
+  {
+    id: 'missing',
+    title: 'Item Missing from Order',
+    desc: "Direct them to get a refund",
+    icon: 'fa-magnifying-glass',
+    iconClass: 'icon-missing',
+    templates: [
+      n => `Hi ${n}, I'm so sorry to hear something is missing! You can report it in the app under the "Orders" tab — tap your order, then "Help." DoorDash will take care of you! 🙏`,
+      n => `Hey ${n}! Sorry about that missing item — to get it resolved, just go to "Orders" in the DoorDash app, select this order, and tap "Help." They're usually super quick! 😊`,
+      n => `${n}, I apologize about that! The fastest fix is through the app — "Orders" tab → select your order → tap "Help" to report the missing item. They'll make it right! 💪`,
+      n => `Hi there ${n}! Sorry for the trouble. To report the missing item, open the DoorDash app, head to "Orders," select this order, and tap "Help" — they'll sort it out for you! 👍`,
+      n => `Oh no, ${n}! I'm really sorry about that. You can get it resolved right in the app — go to "Orders," tap your order, and hit "Help" to report it. They respond fast! ✨`,
+      n => `${n}, so sorry about that! Fastest way to get it resolved: DoorDash app → "Orders" tab → your order → "Help." They're good about making it right quickly! 🙌`,
+      n => `Hey ${n}! Sorry to hear that. To report the missing item: open the app, go to "Orders," find this delivery, and tap "Help." DoorDash will take care of the rest for you! 🫶`,
+      n => `Hi ${n}! I apologize for the inconvenience. Head to the "Orders" tab in the DoorDash app, select your order, and tap "Help" to submit your report — they'll get it handled! ⭐`,
+    ]
+  },
+  {
+    id: 'cancel',
+    title: 'Order Cancellation Request',
+    desc: "Guide them through the process",
+    icon: 'fa-ban',
+    iconClass: 'icon-cancel',
+    templates: [
+      n => `Hi ${n}! To cancel your order, go to the "Orders" tab in the DoorDash app, select your order, and tap "Help" to request a cancellation. You can also call support at +1-855-431-0459! 🙏`,
+      n => `Hey ${n}! No worries — to cancel, just open the "Orders" tab in the app, tap your order, and select "Help." From there you can submit a cancellation. Support is also at +1-855-431-0459! 😊`,
+      n => `${n}, I understand! The quickest way to cancel is through the DoorDash app — "Orders" tab → select your order → "Help." You can also call DoorDash directly at +1-855-431-0459! 👍`,
+      n => `Hi there ${n}! If you'd like to cancel, head to "Orders" in the app, select this order, and tap "Help" to get started. DoorDash support can also assist at +1-855-431-0459! 💪`,
+      n => `${n}, totally understand! To submit a cancellation: DoorDash app → "Orders" → select your order → "Help." If you'd rather call, support is at +1-855-431-0459 ✨`,
+      n => `Hey ${n}! To cancel, just go to the "Orders" tab in your DoorDash app, find this order, and tap "Help." DoorDash support can also handle it at +1-855-431-0459! 🙌`,
+      n => `Hi ${n}! The best way to cancel is through the app — "Orders" tab → your order → "Help." For faster service, you can also call DoorDash directly at +1-855-431-0459! 📞`,
+      n => `${n}, I got you! Open the "Orders" tab in DoorDash, select your order, and hit "Help" to cancel. Or call support at +1-855-431-0459 and they'll take care of it right away! 🫶`,
+    ]
+  },
+  {
+    id: 'double',
+    title: 'Double Order (Why is it taking so long?)',
+    desc: "Explain the stacked order situation",
+    icon: 'fa-layer-group',
+    iconClass: 'icon-double',
+    templates: [
+      n => `Hi ${n}! I wanted to give you a heads up — I'm currently handling two deliveries at once, as DoorDash sometimes assigns a second order alongside yours. I have your order safely packed in my insulated bag to keep it hot and fresh, and I'll have it to you as quickly as possible! As a note, Dashers aren't able to decline these secondary orders without risking removal from their shift — I appreciate your understanding! 🙏`,
+      n => `Hey ${n}! Just wanted to be transparent with you — DoorDash has assigned me a double delivery, meaning I have one additional order to drop off alongside yours. Your food is secured in my thermal bag to stay nice and hot, and you're absolutely still my priority! Unfortunately Dashers can't decline stacked orders without it affecting our standing. Thanks so much for your patience! 😊`,
+      n => `Hi there ${n}! Quick heads up — I've been assigned two deliveries by DoorDash, which can sometimes cause a little extra time. Rest assured, your order is packed snugly in my insulated bag to stay fresh and warm. I'll be there as fast as I can! Please note that Dashers have no option to refuse a second order — it's outside our control. I really appreciate your patience! 🔥`,
+      n => `${n}, I want to be upfront with you — DoorDash assigned me a second delivery on this route. I have your food safely stored in my insulated thermal bag so it stays hot and fresh the whole way. I'll get to you as quickly as possible! Just a heads up that Dashers can't decline stacked orders or we risk being removed from our shift. Thank you for understanding — really appreciate it! 💪`,
+      n => `Hey ${n}! Wanted to let you know I'm running a double order right now — DoorDash stacked a second delivery with yours, which is something we as Dashers unfortunately can't decline without it impacting our shift. Your order is keeping warm in my insulated bag and I'm moving as fast as I can. Thanks for bearing with me — almost there! 🙌`,
+      n => `Hi ${n}! Just a transparent heads up — I've been given two orders to deliver at the same time by DoorDash. Your food is safely packed in my thermal bag to stay hot and fresh, and I'm prioritizing getting to everyone as quickly as possible. Dashers aren't able to refuse these stacked assignments without risking our shift status. I truly appreciate your patience! ✨`,
+      n => `Hey there ${n}! I wanted to reach out and let you know I'm handling two deliveries right now — DoorDash assigned a second order alongside yours. I've got your food tucked safely in my insulated bag so it stays warm and fresh for you. I'll be there ASAP! Unfortunately we have no way to decline double orders without jeopardizing our shift — thanks so much for your understanding! 😄`,
+      n => `Hi ${n}! Just keeping you in the loop — DoorDash has me running a double delivery right now, meaning I have a second order to drop off on my way to you. Your food is safe and warm in my thermal bag, and I'm moving as efficiently as I can! Please know that Dashers can't decline secondary orders without it affecting our shift. Your patience means a lot — thank you! 🫶`,
+    ]
+  },
+];
+
+// ─────────────────────────────────────────────
+//  QUICK TEMPLATES (no name)
+// ─────────────────────────────────────────────
+
+const quickMainScenarios = [
+  {
+    id: 'q-arriving', title: 'Arriving at Restaurant', desc: "Let them know you're picking up",
+    icon: 'fa-store', iconClass: 'icon-arriving',
+    templates: [
+      () => `Hi! I've arrived at the restaurant and they're working on your order now 🍽️ Will have it headed your way ASAP!`,
+      () => `Hey! Just got to the restaurant — your order is being prepared. I'll be on the way to you shortly! 🔥`,
+      () => `Hi there! Just pulled up to the restaurant. Your order is in the works — won't be long! 😊`,
+      () => `I've arrived to pick up your order! The restaurant is on it — update incoming when I'm heading your way. 🙌`,
+      () => `Good news! I'm here at the restaurant and your order is being prepared. Delivery incoming soon! 🍴`,
+      () => `Hi! Made it to the restaurant. Your order is being handled and I'll be rolling out to you shortly! 😄`,
+      () => `Just checked in at the restaurant — your order is actively being put together. On the way ASAP! ✅`,
+      () => `Standing by at the restaurant waiting for your order. They're working on it — out the door soon! 🏃`,
+    ]
+  },
+  {
+    id: 'q-leaving', title: 'Leaving the Restaurant', desc: "Order picked up — heading to you",
+    icon: 'fa-route', iconClass: 'icon-leaving',
+    templates: [
+      () => `Great news! Your order is in my hands and I'm heading your way right now 🚗💨 See you soon!`,
+      () => `Your order is secured and I'm on the move! Should have it at your door before you know it 🔥`,
+      () => `Just grabbed your order and I'm en route to your door. Get ready — delivery coming! 🎉`,
+      () => `Order picked up and I'm rolling out now. On my way to you — get those napkins ready! 🍽️`,
+      () => `We're officially in delivery mode! Order is in my bag and I'm headed straight to you 😄`,
+      () => `Mission accomplished at the restaurant! Your order is with me and I'm on my way now! ⏰`,
+      () => `Just left the restaurant with your food. Everything is packed up and I'm making my way to you! 🙌`,
+      () => `Your order has been picked up and I'm heading out now! Tracking should be updated — see you soon! 🗺️`,
+    ]
+  },
+  {
+    id: 'q-dropoff', title: 'Dropping Off Delivery', desc: "Food is here!",
+    icon: 'fa-box-open', iconClass: 'icon-dropoff',
+    templates: [
+      () => `Hi! Your order has been dropped off at your door — enjoy every bite, you deserve it! 🎉`,
+      () => `Delivery complete! Your food is at the door and ready to go. Bon appétit! 😊`,
+      () => `Just left your order at the door. Grab it while it's hot! 🔥`,
+      () => `Your delivery has officially landed! Dropped it safe and sound at your door — enjoy! 🍽️`,
+      () => `All done! Your order is at your doorstep waiting for you. Enjoy your meal! 🙌`,
+      () => `Special delivery — your food is right outside your door. Hope everything is absolutely delicious! ✨`,
+      () => `Just set your order down at the door. Everything should be fresh and ready to go. Enjoy! 🫶`,
+      () => `Delivery done! Your order is waiting at the door. Thanks for choosing DoorDash — have a great meal! 🌟`,
+    ]
+  },
+];
+
+const quickSpecialScenarios = [
+  {
+    id: 'q-busy', title: 'Busy / Backed Up Restaurant', desc: "Set expectations on wait time",
+    icon: 'fa-clock', iconClass: 'icon-busy',
+    templates: [
+      () => `Hi! Just a heads up — the restaurant is a little backed up, but your order is being prepared. I'm staying right here until it's ready! ⏳`,
+      () => `The restaurant is running a bit behind, but don't worry — I'm on top of it and will have your order the second it's up. Thanks for your patience! 😊`,
+      () => `Your order is taking just a few extra minutes. Good food takes time — I'll be out the door to you as soon as it's ready! 🙏`,
+      () => `Quick update! The restaurant is a little busy so your order may take a few more minutes. I'm standing by and not going anywhere! 💪`,
+      () => `Just keeping you in the loop — it's a busy time at the restaurant, but your order is still being prepared. Should have it on the way shortly! 🕐`,
+      () => `The kitchen is a bit slammed right now, but your order is in the queue. I'm here waiting and will grab it the moment it comes out! 🏃`,
+      () => `Small delay update — the restaurant is handling a rush. Your food is being made and I'll be heading your way just as soon as it's done! 🍳`,
+      () => `Heads up that the restaurant is running a bit slow today. No worries — I'm right here and will have your order on the way as fast as possible! 😄`,
+    ]
+  },
+  {
+    id: 'q-unavail', title: 'Item Unavailable', desc: "Handle out-of-stock items",
+    icon: 'fa-circle-xmark', iconClass: 'icon-unavail',
+    templates: [
+      () => `Hi! The restaurant let me know that one of your items isn't available right now. Would you like to swap it for something else, or should I go ahead without it? DoorDash support: +1-855-431-0459! 📝`,
+      () => `Quick heads up — one of your items is out of stock at this location. Happy to grab a substitute if you'd like, or I can proceed with the rest of your order. Just let me know! 🔄`,
+      () => `Unfortunately one of your items isn't available today. Would you prefer a replacement or would you like to skip it? You can also reach DoorDash at +1-855-431-0459 👍`,
+      () => `Just got word from the restaurant that one of your items is unavailable. Would you like to choose something else? DoorDash support is also at +1-855-431-0459 if needed! 😊`,
+      () => `Wanted to flag quickly — an item from your order isn't available right now. I can grab a similar item or continue without it — totally your call! DoorDash: +1-855-431-0459 ✨`,
+      () => `The restaurant just let me know one of your items is out right now. Would you like a substitution, or should I bring what's available? Support at +1-855-431-0459 can also help! 🤝`,
+      () => `Sorry for the hiccup — one of your items isn't available today. Let me know how you'd like to proceed and I'll handle it right away! Support: +1-855-431-0459 💪`,
+      () => `Small issue — one of your items can't be made right now. Happy to swap it or skip it — whatever works best! DoorDash at +1-855-431-0459 can also assist 🙌`,
+    ]
+  },
+  {
+    id: 'q-missing', title: 'Item Missing from Order', desc: "Direct them to get a refund",
+    icon: 'fa-magnifying-glass', iconClass: 'icon-missing',
+    templates: [
+      () => `Hi, so sorry to hear something is missing! Report it in the DoorDash app under "Orders" → your order → "Help." They'll take care of you right away! 🙏`,
+      () => `Sorry about the missing item! Go to "Orders" in the DoorDash app, select this order, and tap "Help" to report it — they're usually super quick! 😊`,
+      () => `I apologize about that! Fastest fix: DoorDash app → "Orders" → select your order → "Help" to report the missing item. They'll make it right! 💪`,
+      () => `Sorry for the trouble! To report the missing item: DoorDash app → "Orders" → this order → "Help." They'll sort it out for you quickly! 👍`,
+      () => `So sorry about that! You can get it resolved right in the app — "Orders" → your order → "Help." They respond fast! ✨`,
+      () => `Sorry to hear that! Fastest way: DoorDash app → "Orders" → your order → "Help." They're good about making it right quickly! 🙌`,
+      () => `Sorry about the inconvenience! Open the DoorDash app, go to "Orders," find this delivery, and tap "Help" — they'll handle the rest! 🫶`,
+      () => `I apologize! Head to "Orders" in the DoorDash app, select your order, and tap "Help" to report it — they'll get it handled right away! ⭐`,
+    ]
+  },
+  {
+    id: 'q-cancel', title: 'Order Cancellation Request', desc: "Guide them through the process",
+    icon: 'fa-ban', iconClass: 'icon-cancel',
+    templates: [
+      () => `Hi! To cancel your order: "Orders" tab in the DoorDash app → your order → "Help." You can also call support at +1-855-431-0459! 🙏`,
+      () => `No worries! To cancel: DoorDash app → "Orders" → tap your order → "Help." Support is also at +1-855-431-0459! 😊`,
+      () => `Understood! Quickest way to cancel: DoorDash app → "Orders" → select your order → "Help." You can also call DoorDash at +1-855-431-0459! 👍`,
+      () => `To cancel: head to "Orders" in the app, select this order, and tap "Help" to get started. Support at +1-855-431-0459 can also help! 💪`,
+      () => `Totally understand! DoorDash app → "Orders" → your order → "Help." Or call support directly at +1-855-431-0459 ✨`,
+      () => `To cancel, go to the "Orders" tab in your DoorDash app, find this order, and tap "Help." Support can also handle it at +1-855-431-0459! 🙌`,
+      () => `Best way to cancel: DoorDash app → "Orders" → your order → "Help." For faster service, call DoorDash directly at +1-855-431-0459! 📞`,
+      () => `Open the "Orders" tab in DoorDash, select your order, and hit "Help" to cancel. Or call support at +1-855-431-0459 and they'll handle it! 🫶`,
+    ]
+  },
+  {
+    id: 'q-double', title: 'Double Order (Why is it taking so long?)', desc: "Explain the stacked order situation",
+    icon: 'fa-layer-group', iconClass: 'icon-double',
+    templates: [
+      () => `Hi! I wanted to give you a heads up — I'm currently handling two deliveries at once, as DoorDash sometimes assigns a second order alongside yours. I have your order safely packed in my insulated bag to keep it hot and fresh, and I'll have it to you as quickly as possible! Dashers aren't able to decline these secondary orders without risking removal from their shift. I appreciate your understanding! 🙏`,
+      () => `Hey! Just wanted to be transparent — DoorDash has assigned me a double delivery, meaning I have one additional order alongside yours. Your food is secured in my thermal bag to stay hot, and you're my priority! Dashers can't decline stacked orders without it affecting our standing. Thanks so much for your patience! 😊`,
+      () => `Hi! Quick heads up — I've been assigned two deliveries by DoorDash, which may cause a little extra time. Your order is packed in my insulated bag to stay fresh and warm. I'll be there as fast as I can! Dashers have no option to refuse a second order — it's outside our control. I really appreciate your patience! 🔥`,
+      () => `I want to be upfront — DoorDash assigned me a second delivery on this route. Your food is safely stored in my insulated thermal bag so it stays hot and fresh. I'll get to you as quickly as possible! Dashers can't decline stacked orders or we risk being removed from our shift. Thank you for understanding! 💪`,
+      () => `Just wanted to let you know I'm running a double order right now — DoorDash stacked a second delivery with yours, which is something we as Dashers unfortunately can't decline without it impacting our shift. Your order is keeping warm in my insulated bag and I'm moving as fast as I can. Thanks for bearing with me! 🙌`,
+      () => `Transparent heads up — I've been given two orders to deliver at the same time by DoorDash. Your food is safely packed in my thermal bag to stay hot and fresh, and I'm getting to everyone as fast as possible. Dashers aren't able to refuse stacked assignments without risking our shift status. I truly appreciate your patience! ✨`,
+      () => `Just reaching out to let you know I'm handling two deliveries right now — DoorDash assigned a second order alongside yours. I've got your food in my insulated bag so it stays warm, and I'll be there ASAP! We have no way to decline double orders without jeopardizing our shift — thanks so much for your understanding! 😄`,
+      () => `Just keeping you in the loop — DoorDash has me running a double delivery, meaning I have a second stop on my way to you. Your food is safe and warm in my thermal bag, and I'm moving as efficiently as I can! Dashers can't decline secondary orders without it affecting our shift. Your patience means a lot — thank you! 🫶`,
+    ]
+  },
+];
+
+const allPersonalized = [...mainScenarios, ...specialScenarios];
+const allQuick = [...quickMainScenarios, ...quickSpecialScenarios];
+
+// ─────────────────────────────────────────────
+//  STATE
+// ─────────────────────────────────────────────
+
+let currentName = '';
+let pIndices = {};
+let qIndices = {};
+
+allPersonalized.forEach(s => { pIndices[s.id] = rand(s.templates.length); });
+allQuick.forEach(s => { qIndices[s.id] = rand(s.templates.length); });
+
+function rand(len) { return Math.floor(Math.random() * len); }
+
+// ─────────────────────────────────────────────
+//  PAGE SWITCHING
+// ─────────────────────────────────────────────
+
+function switchPage(p) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.page').forEach(pg => pg.classList.remove('active'));
+  if (p === 'personalized') {
+    document.querySelectorAll('.tab')[0].classList.add('active');
+    document.getElementById('page-personalized').classList.add('active');
+  } else {
+    document.querySelectorAll('.tab')[1].classList.add('active');
+    document.getElementById('page-quick').classList.add('active');
+    renderQuick();
+  }
+}
+
+// ─────────────────────────────────────────────
+//  PERSONALIZED
+// ─────────────────────────────────────────────
+
+function generateTemplates() {
+  const input = document.getElementById('nameInput');
+  const name = input.value.trim();
+  if (!name) {
+    input.style.borderColor = 'var(--red)';
+    input.focus();
+    setTimeout(() => { input.style.borderColor = ''; }, 1200);
+    return;
+  }
+  currentName = name;
+  allPersonalized.forEach(s => { pIndices[s.id] = rand(s.templates.length); });
+  renderPersonalized();
+  document.getElementById('controls').classList.add('show');
+  document.getElementById('emptyState').style.display = 'none';
+  document.getElementById('badgeName').textContent = currentName;
+  document.getElementById('customerBadge').classList.add('show');
+  document.getElementById('clearBtn').classList.add('show');
+}
+
+function getPersonalizedText(s) {
+  const idx = pIndices[s.id];
+  if (s.hasItemInput) {
+    const el = document.getElementById(s.itemInputId);
+    return s.templates[idx](currentName, el ? el.value.trim() : '');
+  }
+  return s.templates[idx](currentName);
+}
+
+function buildCard(s, idx, isQuick) {
+  const text = isQuick ? allQuick.find(q => q.id === s.id) ? getQuickText(s) : '' : getPersonalizedText(s);
+  const delay = (idx * 0.05 + 0.05) + 's';
+  const shuffleFn = isQuick ? `shuffleQuick('${s.id}')` : `shufflePerson('${s.id}')`;
+  const copyFn = `copyBubble('${s.id}', this)`;
+
+  const itemInputHTML = (!isQuick && s.hasItemInput) ? `
+    <div class="item-hint"><i class="fa-solid fa-pen-to-square"></i> ${s.itemHint}</div>
+    <div class="item-input-row">
+      <input type="text" id="${s.itemInputId}" placeholder="${s.itemPlaceholder}" autocomplete="off" oninput="updateItem('${s.id}')" />
+    </div>
+  ` : '';
+
+  const card = document.createElement('div');
+  card.className = 'scenario-card';
+  card.dataset.id = s.id;
+  card.style.animationDelay = delay;
+  card.innerHTML = `
+    <div class="card-header" onclick="toggleCard(this)">
+      <div class="card-icon ${s.iconClass}"><i class="fa-solid ${s.icon}"></i></div>
+      <div class="card-info">
+        <div class="card-title">${s.title}</div>
+        <div class="card-desc">${s.desc}</div>
+      </div>
+      <i class="fa-solid fa-chevron-down chevron"></i>
+    </div>
+    <div class="card-body">
+      <div class="card-inner">
+        ${itemInputHTML}
+        <div class="bubble" id="bubble-${s.id}">${text}</div>
+        <div class="bubble-actions">
+          <button class="btn-copy" onclick="${copyFn}"><i class="fa-regular fa-copy"></i> Copy</button>
+          <button class="btn-shuffle" onclick="${shuffleFn}" title="New variation"><i class="fa-solid fa-shuffle"></i></button>
+        </div>
+      </div>
+    </div>
+  `;
+  return card;
+}
+
+function makeDivider(label) {
+  const d = document.createElement('div');
+  d.className = 'section-divider';
+  d.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i><span>${label}</span>`;
+  return d;
+}
+
+function renderPersonalized() {
+  const c = document.getElementById('personContainer');
+  c.innerHTML = '';
+  mainScenarios.forEach((s, i) => c.appendChild(buildCard(s, i, false)));
+  c.appendChild(makeDivider('Special Circumstances'));
+  specialScenarios.forEach((s, i) => c.appendChild(buildCard(s, mainScenarios.length + 1 + i, false)));
+}
+
+function shufflePerson(id) {
+  const s = allPersonalized.find(x => x.id === id);
+  let ni;
+  do { ni = rand(s.templates.length); } while (ni === pIndices[id] && s.templates.length > 1);
+  pIndices[id] = ni;
+  const b = document.getElementById('bubble-' + id);
+  b.textContent = getPersonalizedText(s);
+  b.classList.add('pop');
+  setTimeout(() => b.classList.remove('pop'), 300);
+}
+
+function updateItem(id) {
+  const s = allPersonalized.find(x => x.id === id);
+  if (!s || !currentName) return;
+  const b = document.getElementById('bubble-' + id);
+  if (b) b.textContent = getPersonalizedText(s);
+}
+
+function resetAll() {
+  currentName = '';
+  document.getElementById('nameInput').value = '';
+  document.getElementById('personContainer').innerHTML = '';
+  document.getElementById('controls').classList.remove('show');
+  document.getElementById('emptyState').style.display = '';
+  document.getElementById('customerBadge').classList.remove('show');
+  document.getElementById('clearBtn').classList.remove('show');
+  document.getElementById('nameInput').focus();
+}
+
+// ─────────────────────────────────────────────
+//  QUICK
+// ─────────────────────────────────────────────
+
+function getQuickText(s) {
+  return s.templates[qIndices[s.id]]();
+}
+
+function renderQuick() {
+  const c = document.getElementById('quickContainer');
+  if (c.innerHTML !== '') return; // already rendered
+  quickMainScenarios.forEach((s, i) => c.appendChild(buildCard(s, i, true)));
+  c.appendChild(makeDivider('Special Circumstances'));
+  quickSpecialScenarios.forEach((s, i) => c.appendChild(buildCard(s, quickMainScenarios.length + 1 + i, true)));
+}
+
+function shuffleQuick(id) {
+  const s = allQuick.find(x => x.id === id);
+  let ni;
+  do { ni = rand(s.templates.length); } while (ni === qIndices[id] && s.templates.length > 1);
+  qIndices[id] = ni;
+  const b = document.getElementById('bubble-' + id);
+  b.textContent = getQuickText(s);
+  b.classList.add('pop');
+  setTimeout(() => b.classList.remove('pop'), 300);
+}
+
+// ─────────────────────────────────────────────
+//  SHARED UTILS
+// ─────────────────────────────────────────────
+
+function toggleCard(header) {
+  header.closest('.scenario-card').classList.toggle('open');
+}
+
+function copyBubble(id, btn) {
+  const text = document.getElementById('bubble-' + id).textContent;
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(() => showCopied(btn));
+  } else {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed'; ta.style.left = '-9999px';
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); } catch(e) {}
+    document.body.removeChild(ta);
+    showCopied(btn);
+  }
+}
+
+function showCopied(btn) {
+  btn.classList.add('copied');
+  const icon = btn.querySelector('i');
+  icon.className = 'fa-solid fa-check';
+  btn.childNodes[1].textContent = ' Copied!';
+  showToast('Copied to clipboard!');
+  setTimeout(() => {
+    btn.classList.remove('copied');
+    icon.className = 'fa-regular fa-copy';
+    btn.childNodes[1].textContent = ' Copy';
+  }, 1600);
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  document.getElementById('toastMsg').textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+// Name input
+const nameInput = document.getElementById('nameInput');
+nameInput.addEventListener('keydown', e => { if (e.key === 'Enter') generateTemplates(); });
+nameInput.addEventListener('input', () => {
+  document.getElementById('clearBtn').classList.toggle('show', nameInput.value.length > 0);
+});
+</script>
+</body>
+</html>
